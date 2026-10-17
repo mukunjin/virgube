@@ -16,9 +16,9 @@ import com.mukunjin.virgube.scramble.rng.rndEl
  * 尤其是随机数的消耗顺序：
  *
  * 1. `fixOri(eo, 12, 2)`  -> 11 次 `rn(2)`
- * 2. `fixOri(co, 12, 3)`  -> 11 次 `rn(3)`
+ * 2. `fixOri(co, 8, 3)`   -> 7 次 `rn(3)`（co 长度为 8）
  * 3. `fixPerm(ep, 12, -1)` -> 12 次 `rn(cntU)`，cntU 由 12 递减到 1
- * 4. `fixPerm(cp, 12, parity)` -> 12 次 `rn(cntU)`
+ * 4. `fixPerm(cp, 8, parity)` -> 8 次 `rn(cntU)`（cp 长度为 8）
  * 5. `rndEl(rndpre)` / `rndEl(rndapp)`（默认空后缀，但仍各消耗 1 次随机数）
  *
  * 任意偏差都会导致打乱与 csTimer 不一致。
