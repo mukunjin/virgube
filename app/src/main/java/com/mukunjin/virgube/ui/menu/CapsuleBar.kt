@@ -38,10 +38,10 @@ import kotlin.math.roundToInt
 
 /** 底部分段胶囊可切换的四个界面。 */
 enum class Panel(val title: String) {
-    TIMER("计时"),
-    STATS("成绩"),
-    SETTINGS("设置"),
-    ABOUT("关于"),
+    TIMER("Timer"),
+    STATS("Stats"),
+    SETTINGS("Settings"),
+    ABOUT("About"),
 }
 
 private val ThumbHeight = 46.dp

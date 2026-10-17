@@ -27,7 +27,7 @@ class SessionRepository(private val dao: VirgubeDao) {
         }
         return dao.insertSession(
             SessionEntity(
-                name = "分组 1",
+                name = "Group 1",
                 orderIndex = 0,
                 createdAt = System.currentTimeMillis() / 1000,
             )

@@ -72,7 +72,7 @@ fun StatsScreen(ui: TimerUiState, vm: TimerViewModel) {
                 Spacer(modifier = Modifier.width(6.dp))
             }
             SessionChip(
-                name = "＋ 新建",
+                name = "＋ New",
                 selected = false,
                 onClick = { createDialog = true },
             )
@@ -92,7 +92,7 @@ fun StatsScreen(ui: TimerUiState, vm: TimerViewModel) {
                 modifier = Modifier.fillMaxWidth().height(80.dp),
                 contentAlignment = Alignment.Center,
             ) {
-                Text(text = "暂无成绩", color = VirgubeColors.Disabled, fontSize = 14.sp)
+                Text(text = "No solves yet", color = VirgubeColors.Disabled, fontSize = 14.sp)
             }
         } else {
             for (solve in ui.solves.asReversed()) {
@@ -118,16 +118,16 @@ fun StatsScreen(ui: TimerUiState, vm: TimerViewModel) {
         val session = ui.sessions.firstOrNull { it.id == ui.sessionId }
         AlertDialog(
             onDismissRequest = { confirmDeleteSession = false },
-            title = { Text("删除分组") },
-            text = { Text("将删除「${session?.name ?: ""}」及其全部成绩，且不可恢复。") },
+            title = { Text("Delete group") },
+            text = { Text("Delete \"${session?.name ?: ""}\" and all its solves? This cannot be undone.") },
             confirmButton = {
                 TextButton(onClick = {
                     confirmDeleteSession = false
                     session?.let { vm.deleteSession(it) }
-                }) { Text("删除", color = VirgubeColors.TimerRed) }
+                }) { Text("Delete", color = VirgubeColors.TimerRed) }
             },
             dismissButton = {
-                TextButton(onClick = { confirmDeleteSession = false }) { Text("取消") }
+                TextButton(onClick = { confirmDeleteSession = false }) { Text("Cancel") }
             },
         )
     }
@@ -135,29 +135,29 @@ fun StatsScreen(ui: TimerUiState, vm: TimerViewModel) {
     confirmDeleteSolve?.let { solve ->
         AlertDialog(
             onDismissRequest = { confirmDeleteSolve = null },
-            title = { Text("删除成绩") },
+            title = { Text("Delete solve") },
             text = {
                 Text(
-                    "将删除该次成绩 " +
+                    "Delete this solve (" +
                         TimeFormat.prettyPenalty(solve.totalMs, solve.penalty, ui.useMilli) +
-                        "，且不可恢复。",
+                        ")? This cannot be undone.",
                 )
             },
             confirmButton = {
                 TextButton(onClick = {
                     confirmDeleteSolve = null
                     vm.deleteSolve(solve)
-                }) { Text("删除", color = VirgubeColors.TimerRed) }
+                }) { Text("Delete", color = VirgubeColors.TimerRed) }
             },
             dismissButton = {
-                TextButton(onClick = { confirmDeleteSolve = null }) { Text("取消") }
+                TextButton(onClick = { confirmDeleteSolve = null }) { Text("Cancel") }
             },
         )
     }
 
     if (createDialog) {
         SessionNameDialog(
-            title = "新建分组",
+            title = "New group",
             initial = vm.suggestGroupName(),
             existingNames = ui.sessions.map { it.name },
             originalName = null,
@@ -171,7 +171,7 @@ fun StatsScreen(ui: TimerUiState, vm: TimerViewModel) {
 
     renameTarget?.let { target ->
         SessionNameDialog(
-            title = "重命名分组",
+            title = "Rename group",
             initial = target.name,
             existingNames = ui.sessions.map { it.name },
             originalName = target.name,
@@ -209,10 +209,10 @@ private fun SessionNameDialog(
     var text by remember { mutableStateOf(initial) }
     val trimmed = text.trim()
     val error = when {
-        trimmed.isEmpty() -> "名称不能为空"
-        trimmed.length > NAME_MAX -> "最多 $NAME_MAX 个字"
-        !NAME_ALLOWED.matches(trimmed) -> "仅支持中英文（可含数字与空格）"
-        existingNames.any { it != originalName && it.equals(trimmed, ignoreCase = true) } -> "该名称已存在"
+        trimmed.isEmpty() -> "Name cannot be empty"
+        trimmed.length > NAME_MAX -> "At most $NAME_MAX characters"
+        !NAME_ALLOWED.matches(trimmed) -> "Only letters, digits and spaces allowed"
+        existingNames.any { it != originalName && it.equals(trimmed, ignoreCase = true) } -> "Name already exists"
         else -> null
     }
     AlertDialog(
@@ -243,10 +243,10 @@ private fun SessionNameDialog(
             }
         },
         confirmButton = {
-            TextButton(enabled = error == null, onClick = { onConfirm(trimmed) }) { Text("确定") }
+            TextButton(enabled = error == null, onClick = { onConfirm(trimmed) }) { Text("OK") }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("取消") }
+            TextButton(onClick = onDismiss) { Text("Cancel") }
         },
     )
 }
@@ -276,12 +276,12 @@ private fun StatsSummary(
                 .background(VirgubeColors.SurfaceVariant)
                 .padding(horizontal = 16.dp, vertical = 6.dp),
         ) {
-            StatRow("单次最好", s.bestSingleMs?.let { TimeFormat.pretty(it, milli) } ?: "-")
-            StatRow("单次最差", s.worstSingleMs?.let { TimeFormat.pretty(it, milli) } ?: "-")
-            StatRow("最好 ao5", TimeFormat.prettyAvgOrDnf(s.bestAo5, milli))
-            StatRow("最好 ao12", TimeFormat.prettyAvgOrDnf(s.bestAo12, milli))
-            StatRow("总平均", TimeFormat.prettyAvgOrDnf(s.meanMs, milli))
-            StatRow("次数", "${s.count}")
+            StatRow("Best single", s.bestSingleMs?.let { TimeFormat.pretty(it, milli) } ?: "-")
+            StatRow("Worst single", s.worstSingleMs?.let { TimeFormat.pretty(it, milli) } ?: "-")
+            StatRow("Best ao5", TimeFormat.prettyAvgOrDnf(s.bestAo5, milli))
+            StatRow("Best ao12", TimeFormat.prettyAvgOrDnf(s.bestAo12, milli))
+            StatRow("Mean", TimeFormat.prettyAvgOrDnf(s.meanMs, milli))
+            StatRow("Count", "${s.count}")
             StatRow("DNF", "${s.dnfCount}")
             Spacer(modifier = Modifier.height(10.dp))
             val current = ui.sessions.firstOrNull { it.id == ui.sessionId }
@@ -291,12 +291,12 @@ private fun StatsSummary(
                 horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.End),
             ) {
                 SessionActionCapsule(
-                    label = "重命名",
+                    label = "Rename",
                     danger = false,
                     onClick = { current?.let(onRenameSession) },
                 )
                 SessionActionCapsule(
-                    label = "删除分组",
+                    label = "Delete group",
                     danger = true,
                     onClick = onDeleteSession,
                 )
@@ -501,7 +501,7 @@ fun SolveDetailOverlay(solve: SolveEntity, useMilli: Boolean, onClose: () -> Uni
                 .padding(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(text = "本次成绩", color = VirgubeColors.OnSurfaceVariant, fontSize = 13.sp)
+            Text(text = "Solve", color = VirgubeColors.OnSurfaceVariant, fontSize = 13.sp)
             Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = TimeFormat.prettyPenalty(solve.totalMs, solve.penalty, useMilli),
@@ -511,10 +511,10 @@ fun SolveDetailOverlay(solve: SolveEntity, useMilli: Boolean, onClose: () -> Uni
                 fontWeight = FontWeight.Medium,
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "打乱", color = VirgubeColors.OnSurfaceVariant, fontSize = 13.sp)
+            Text(text = "Scramble", color = VirgubeColors.OnSurfaceVariant, fontSize = 13.sp)
             Spacer(modifier = Modifier.height(6.dp))
             Text(
-                text = scramble.ifEmpty { "（该成绩未记录打乱）" },
+                text = scramble.ifEmpty { "(No scramble recorded)" },
                 color = VirgubeColors.OnBackground,
                 fontSize = 15.sp,
                 fontFamily = TimerFontFamily,
@@ -529,7 +529,7 @@ fun SolveDetailOverlay(solve: SolveEntity, useMilli: Boolean, onClose: () -> Uni
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
-            TextButton(onClick = onClose) { Text("关闭") }
+            TextButton(onClick = onClose) { Text("Close") }
         }
     }
 }

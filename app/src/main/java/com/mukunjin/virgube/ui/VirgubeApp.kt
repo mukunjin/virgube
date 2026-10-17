@@ -54,9 +54,9 @@ fun VirgubeApp() {
         ) {
             when (panel) {
                 Panel.TIMER -> TimerScreen(ui = ui, vm = vm, modifier = Modifier.fillMaxSize())
-                Panel.STATS -> SheetScreen(title = "成绩") { StatsScreen(ui = ui, vm = vm) }
-                Panel.SETTINGS -> SheetScreen(title = "设置") { SettingsScreen(ui = ui, vm = vm) }
-                Panel.ABOUT -> SheetScreen(title = "关于 Virgube") { AboutScreen() }
+                Panel.STATS -> SheetScreen(title = "Stats") { StatsScreen(ui = ui, vm = vm) }
+                Panel.SETTINGS -> SheetScreen(title = "Settings") { SettingsScreen(ui = ui, vm = vm) }
+                Panel.ABOUT -> SheetScreen(title = "About Virgube") { AboutScreen() }
             }
 
             // 观察开始到拍表之间隐去底部胶囊，屏幕上只留时间

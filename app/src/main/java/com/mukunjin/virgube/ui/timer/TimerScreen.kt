@@ -191,7 +191,7 @@ private fun ScrambleBar(
     }
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
-            text = ui.scramble.ifEmpty { if (ui.generating) "生成中…" else "" },
+            text = ui.scramble.ifEmpty { if (ui.generating) "Generating…" else "" },
             color = VirgubeColors.OnSurfaceVariant,
             fontSize = 18.sp,
             fontFamily = TimerFontFamily,
@@ -201,8 +201,8 @@ private fun ScrambleBar(
         )
         Spacer(modifier = Modifier.height(10.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            NavButton(label = "上一条", enabled = ui.canPrev, onClick = onPrev)
-            NavButton(label = "下一条", enabled = true, onClick = onNext)
+            NavButton(label = "Prev", enabled = ui.canPrev, onClick = onPrev)
+            NavButton(label = "Next", enabled = true, onClick = onNext)
         }
     }
 }

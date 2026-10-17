@@ -18,7 +18,7 @@ import com.mukunjin.virgube.ui.theme.VirgubeColors
 fun AboutScreen() {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "一个简易轻巧的Android原生三阶魔方计时器。Kotlin+Jetpack Compose实现。",
+            text = "A lightweight native Android timer for the 3x3x3 Rubik's Cube, built with Kotlin + Jetpack Compose.",
             color = VirgubeColors.OnSurfaceVariant,
             fontSize = 15.sp,
             lineHeight = 23.sp,
@@ -27,13 +27,13 @@ fun AboutScreen() {
         Spacer(modifier = Modifier.height(10.dp))
         // 版本号与 APK 同源（根目录 gradle.properties → BuildConfig）
         Text(
-            text = "版本 ${BuildConfig.VERSION_NAME}",
+            text = "Version ${BuildConfig.VERSION_NAME}",
             color = VirgubeColors.OnSurfaceVariant,
             fontSize = 13.sp,
         )
 
         Spacer(modifier = Modifier.height(24.dp))
-        SectionTitle("致谢")
+        SectionTitle("Credits")
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "csTimer",
@@ -42,22 +42,22 @@ fun AboutScreen() {
         )
         Spacer(modifier = Modifier.height(2.dp))
         Text(
-            text = "打乱与计时逻辑参考并复刻自 csTimer。",
+            text = "Scramble and timer logic referenced from and reimplemented after csTimer.",
             color = VirgubeColors.OnSurfaceVariant,
             fontSize = 13.sp,
         )
 
         Spacer(modifier = Modifier.height(24.dp))
-        SectionTitle("作者")
+        SectionTitle("Author")
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Virgube 作者 mukunjin",
+            text = "Virgube by mukunjin",
             color = VirgubeColors.OnBackground,
             fontSize = 15.sp,
         )
         Spacer(modifier = Modifier.height(2.dp))
         Text(
-            text = "仓库：https://github.com/mukunjin/virgube",
+            text = "Repository: https://github.com/mukunjin/virgube",
             color = VirgubeColors.OnSurfaceVariant,
             fontSize = 13.sp,
         )

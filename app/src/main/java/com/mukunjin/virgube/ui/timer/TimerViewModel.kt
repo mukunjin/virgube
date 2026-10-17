@@ -39,7 +39,7 @@ data class TimerUiState(
     val sessions: List<SessionEntity> = emptyList(),
     val sessionId: Long = 0L,
     val sessionName: String = "",
-    val useInspection: Boolean = false,
+    val useInspection: Boolean = true,
     val useMilli: Boolean = true,
     val scrambleAlign: Int = 1,
     /** 当前正在查看详情的成绩（非空时显示应用内详情浮层）。 */
@@ -209,7 +209,7 @@ class TimerViewModel(app: Application) : AndroidViewModel(app) {
         val maxIndex = _state.value.sessions
             .mapNotNull { it.name.substringAfterLast(' ').toIntOrNull() }
             .maxOrNull() ?: 0
-        return "分组 ${maxIndex + 1}"
+        return "Group ${maxIndex + 1}"
     }
 
     /** 新建分组（使用用户输入的名字）。 */

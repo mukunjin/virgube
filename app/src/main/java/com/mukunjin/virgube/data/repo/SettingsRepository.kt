@@ -16,9 +16,9 @@ class SettingsRepository(context: Context) {
         get() = prefs.getString(KEY_SCR_TYPE, "333") ?: "333"
         set(value) = prefs.edit().putString(KEY_SCR_TYPE, value).apply()
 
-    /** 是否开启 15 秒观察。 */
+    /** 是否开启 15 秒观察（首次安装默认开启）。 */
     var useInspection: Boolean
-        get() = prefs.getBoolean(KEY_USE_INS, false)
+        get() = prefs.getBoolean(KEY_USE_INS, true)
         set(value) = prefs.edit().putBoolean(KEY_USE_INS, value).apply()
 
     /** 打乱文本水平对齐：0 左、1 居中、2 右。 */

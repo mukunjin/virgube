@@ -30,27 +30,27 @@ import com.mukunjin.virgube.ui.timer.TimerViewModel
 fun SettingsScreen(ui: TimerUiState, vm: TimerViewModel) {
     Column(modifier = Modifier.fillMaxWidth()) {
         SwitchRow(
-            title = "15 秒观察",
-            subtitle = "开始前先观察魔方，超时记 +2 / DNF",
+            title = "15s inspection",
+            subtitle = "Inspect the cube before starting; overtime gives +2 / DNF",
             checked = ui.useInspection,
             onChange = { vm.setUseInspection(it) },
         )
         Spacer(modifier = Modifier.height(12.dp))
         SwitchRow(
-            title = "精确到毫秒",
-            subtitle = "关闭后只显示到 0.01 秒",
+            title = "Millisecond precision",
+            subtitle = "When off, times are shown to 0.01s",
             checked = ui.useMilli,
             onChange = { vm.setUseMilli(it) },
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "打乱对齐",
+            text = "Scramble alignment",
             color = VirgubeColors.OnBackground,
             fontSize = 15.sp,
         )
         Spacer(modifier = Modifier.height(6.dp))
         Row {
-            for ((index, label) in listOf(0 to "左", 1 to "中", 2 to "右")) {
+            for ((index, label) in listOf(0 to "Left", 1 to "Center", 2 to "Right")) {
                 SegButton(
                     label = label,
                     selected = ui.scrambleAlign == index,
