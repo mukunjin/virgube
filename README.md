@@ -12,6 +12,10 @@ The 3x3x3 (333) scramble algorithm is a **full reimplementation of csTimer's**: 
 
 ## Features
 
+<p align="center">
+  <img src="docs/ui.png" width="480" alt="Virgube UI">
+</p>
+
 - **Scramble**: 333 scramble generation, previous/next history, refresh, scramble expansion diagram
 - **Timer**: tap anywhere on the full screen to time. Long-press 300 ms to enter inspection (15 s countdown; over 15 s gives +2, over 17 s gives DNF), long-press 300 ms again to get ready, release to start
 - **Solves**: automatically stored (including the scramble text), per-solve +2 / DNF / delete
@@ -19,10 +23,6 @@ The 3x3x3 (333) scramble algorithm is a **full reimplementation of csTimer's**: 
 - **Statistics**: ao5 / ao12 / best / worst / mean / count / DNF
 - **Settings**: inspection toggle, millisecond precision, scramble text wrap and alignment
 - **Display**: full screen, keep screen on, pure black background
-
-<p align="center">
-  <img src="docs/ui.png" width="300" alt="Virgube UI">
-</p>
 
 ## Not Included
 
