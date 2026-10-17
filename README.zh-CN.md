@@ -13,7 +13,7 @@
 ## 功能
 
 <p align="center">
-  <img src="docs/ui.png" width="480" alt="Virgube 界面">
+  <img src="docs/ui.png" alt="Virgube 界面">
 </p>
 
 - **打乱**：333 打乱生成、上一条/下一条历史、刷新、打乱展开图

@@ -13,7 +13,7 @@ The 3x3x3 (333) scramble algorithm is a **full reimplementation of csTimer's**: 
 ## Features
 
 <p align="center">
-  <img src="docs/ui.png" width="480" alt="Virgube UI">
+  <img src="docs/ui.png" alt="Virgube UI">
 </p>
 
 - **Scramble**: 333 scramble generation, previous/next history, refresh, scramble expansion diagram
