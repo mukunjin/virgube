@@ -12,6 +12,7 @@ local.properties
 # IDE 本地配置
 .idea/
 *.iml
+AGENTS.md
 
 # 签名与密钥
 *.jks
