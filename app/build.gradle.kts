@@ -6,22 +6,22 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
-// 版本号唯一来源：根目录 gradle.properties 的 virgo.versionName / virgo.versionCode
-val virgoVersionName: String = providers.gradleProperty("virgo.versionName").get()
-val virgoVersionCode: Int = providers.gradleProperty("virgo.versionCode").get().toInt()
+// 版本号唯一来源：根目录 gradle.properties 的 virgube.versionName / virgube.versionCode
+val virgubeVersionName: String = providers.gradleProperty("virgube.versionName").get()
+val virgubeVersionCode: Int = providers.gradleProperty("virgube.versionCode").get().toInt()
 
 android {
-    namespace = "com.virgo.cubetimer"
+    namespace = "com.mukunjin.virgube"
     compileSdk = 37
     buildToolsVersion = "36.0.0"
 
     defaultConfig {
-        applicationId = "com.virgo.cubetimer"
+        applicationId = "com.mukunjin.virgube"
         minSdk = 24
         targetSdk = 37
         // 界面如需显示版本，请使用 BuildConfig.VERSION_NAME（buildFeatures.buildConfig 已开启）
-        versionCode = virgoVersionCode
-        versionName = virgoVersionName
+        versionCode = virgubeVersionCode
+        versionName = virgubeVersionName
     }
 
     buildTypes {
@@ -45,11 +45,11 @@ android {
 }
 
 androidComponents {
-    // 产物命名为 virgo-<版本号>.apk（debug 包追加 -debug），版本号与 APK 内一致（同一处配置）
+    // 产物命名为 virgube-<版本号>.apk（debug 包追加 -debug），版本号与 APK 内一致（同一处配置）
     onVariants { variant ->
         val suffix = if (variant.buildType == "release") "" else "-${variant.buildType}"
         variant.outputs.forEach { output ->
-            output.outputFileName.set("virgo-$virgoVersionName$suffix.apk")
+            output.outputFileName.set("virgube-$virgubeVersionName$suffix.apk")
         }
     }
 }

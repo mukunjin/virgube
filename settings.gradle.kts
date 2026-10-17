@@ -20,5 +20,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Virgo"
+rootProject.name = "Virgube"
 include(":app")

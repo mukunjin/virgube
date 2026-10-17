@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
-      Virgo 完全离线：不申请 android.permission.INTERNET，
+      Virgube 完全离线：不申请 android.permission.INTERNET，
       因此 App 在系统层面就没有联网能力。界面与逻辑均为原生实现，无 WebView。
     -->
 
@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:enableOnBackInvokedCallback="false"
         android:supportsRtl="false"
-        android:theme="@style/Theme.Virgo">
+        android:theme="@style/Theme.Virgube">
 
         <activity
             android:name=".MainActivity"
