@@ -20,6 +20,10 @@ The 3x3x3 (333) scramble algorithm is a **full reimplementation of csTimer's**: 
 - **Settings**: inspection toggle, millisecond precision, scramble text wrap and alignment
 - **Display**: full screen, keep screen on, pure black background
 
+<p align="center">
+  <img src="docs/ui.png" width="300" alt="Virgube UI">
+</p>
+
 ## Not Included
 
 Bluetooth/hardware timers, versus mode, online competitions, solver UI, virtual cube, online services, donations, solve import/export UI.
