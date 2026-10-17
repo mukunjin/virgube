@@ -21,3 +21,6 @@ AGENTS.md
 # 系统文件
 .DS_Store
 Thumbs.db
+
+# csTimer 第三方 GPL 源码（仅用于生成金标准，按需从 git 历史取回，不入库）
+tools/cstimer/
