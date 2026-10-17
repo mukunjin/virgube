@@ -19,12 +19,7 @@ class SessionRepository(private val dao: VirgubeDao) {
     /** 确保至少存在一个分组（首次启动时创建默认分组）。 */
     suspend fun ensureDefaultSession(): Long {
         val existing = dao.sessions()
-        if (existing.isNotEmpty()) {
-            // 兼容旧版本数据：把历史的「会话 N」改名为「分组 N」
-            existing.filter { it.name.startsWith("会话 ") }
-                .forEach { dao.renameSession(it.id, it.name.replaceFirst("会话 ", "分组 ")) }
-            return existing.first().id
-        }
+        if (existing.isNotEmpty()) return existing.first().id
         return dao.insertSession(
             SessionEntity(
                 name = "Group 1",
