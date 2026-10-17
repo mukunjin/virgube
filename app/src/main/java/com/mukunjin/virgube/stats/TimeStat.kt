@@ -99,19 +99,36 @@ object TimeStat {
         }
         return best
     }
+
+    /** 全程最差的一次平均（含所有长度为 [size] 的窗口）。 */
+    fun worstAverage(values: List<Long>, size: Int, trim: String, trimRight: String): Double? {
+        if (values.size < size) return null
+        var worst: Double? = null
+        for (i in 0..values.size - size) {
+            val avg = average(values.subList(i, i + size), trim, trimRight) ?: continue
+            if (worst == null || avg > worst) worst = avg
+        }
+        return worst
+    }
 }
 
 /** 一个会话的汇总统计。 */
 data class SessionStats(
     val count: Int = 0,
     val dnfCount: Int = 0,
+    val plus2Count: Int = 0,
     val bestSingleMs: Long? = null,
     val worstSingleMs: Long? = null,
     val meanMs: Double? = null,
     val ao5: Double? = null,
     val ao12: Double? = null,
+    val ao100: Double? = null,
     val bestAo5: Double? = null,
     val bestAo12: Double? = null,
+    val bestAo100: Double? = null,
+    val worstAo5: Double? = null,
+    val worstAo12: Double? = null,
+    val worstAo100: Double? = null,
 ) {
     companion object {
         fun of(
@@ -124,13 +141,19 @@ data class SessionStats(
             return SessionStats(
                 count = values.size,
                 dnfCount = values.count { it == TimeStat.DNF },
+                plus2Count = solves.count { it.penalty == 2000 },
                 bestSingleMs = TimeStat.bestSingle(values),
                 worstSingleMs = TimeStat.worstSingle(values),
                 meanMs = TimeStat.mean(values),
                 ao5 = TimeStat.lastAverage(values, 5, trim, trimRight),
                 ao12 = TimeStat.lastAverage(values, 12, trim, trimRight),
+                ao100 = TimeStat.lastAverage(values, 100, trim, trimRight),
                 bestAo5 = TimeStat.bestAverage(values, 5, trim, trimRight),
                 bestAo12 = TimeStat.bestAverage(values, 12, trim, trimRight),
+                bestAo100 = TimeStat.bestAverage(values, 100, trim, trimRight),
+                worstAo5 = TimeStat.worstAverage(values, 5, trim, trimRight),
+                worstAo12 = TimeStat.worstAverage(values, 12, trim, trimRight),
+                worstAo100 = TimeStat.worstAverage(values, 100, trim, trimRight),
             )
         }
     }

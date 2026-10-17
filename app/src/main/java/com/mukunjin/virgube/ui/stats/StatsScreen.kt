@@ -251,7 +251,7 @@ private fun SessionNameDialog(
     )
 }
 
-/** 会话汇总：ao5/ao12 用大号卡片突出展示，其余指标用列表呈现。 */
+/** 会话汇总：顶部当前 ao5/ao12 预览 + 最佳/最差两栏切换 + 其它统计。 */
 @Composable
 private fun StatsSummary(
     ui: TimerUiState,
@@ -260,7 +260,11 @@ private fun StatsSummary(
 ) {
     val s = ui.stats
     val milli = ui.useMilli
+    /** 成绩位列切换：true 显示最佳，false 显示最差。 */
+    var showBest by remember { mutableStateOf(true) }
+
     Column(modifier = Modifier.fillMaxWidth()) {
+        // 顶部：当前 ao5 / ao12 预览
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -269,6 +273,26 @@ private fun StatsSummary(
             StatCard("ao12", TimeFormat.prettyAvgOrDnf(s.ao12, milli), Modifier.weight(1f))
         }
         Spacer(modifier = Modifier.height(12.dp))
+
+        // 最佳 / 最差两栏切换，各含 单次 / ao5 / ao12 / ao100
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(16.dp))
+                .background(VirgubeColors.SurfaceVariant)
+                .padding(horizontal = 16.dp, vertical = 10.dp),
+        ) {
+            RankTabs(showBest = showBest, onSelect = { showBest = it })
+            Spacer(modifier = Modifier.height(6.dp))
+            val single = if (showBest) s.bestSingleMs else s.worstSingleMs
+            StatRow("Single", single?.let { TimeFormat.pretty(it, milli) } ?: "-")
+            StatRow("ao5", avgText(if (showBest) s.bestAo5 else s.worstAo5, milli))
+            StatRow("ao12", avgText(if (showBest) s.bestAo12 else s.worstAo12, milli))
+            StatRow("ao100", avgText(if (showBest) s.bestAo100 else s.worstAo100, milli))
+        }
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // 其它统计
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -276,13 +300,10 @@ private fun StatsSummary(
                 .background(VirgubeColors.SurfaceVariant)
                 .padding(horizontal = 16.dp, vertical = 6.dp),
         ) {
-            StatRow("Best single", s.bestSingleMs?.let { TimeFormat.pretty(it, milli) } ?: "-")
-            StatRow("Worst single", s.worstSingleMs?.let { TimeFormat.pretty(it, milli) } ?: "-")
-            StatRow("Best ao5", TimeFormat.prettyAvgOrDnf(s.bestAo5, milli))
-            StatRow("Best ao12", TimeFormat.prettyAvgOrDnf(s.bestAo12, milli))
-            StatRow("Mean", TimeFormat.prettyAvgOrDnf(s.meanMs, milli))
-            StatRow("Count", "${s.count}")
+            StatRow("Mean", avgText(s.meanMs, milli))
+            StatRow("+2", "${s.plus2Count}")
             StatRow("DNF", "${s.dnfCount}")
+            StatRow("Count", "${s.count}")
             Spacer(modifier = Modifier.height(10.dp))
             val current = ui.sessions.firstOrNull { it.id == ui.sessionId }
             // 「重命名」「删除分组」紧凑胶囊，全部靠右下方对齐
@@ -303,6 +324,48 @@ private fun StatsSummary(
             }
             Spacer(modifier = Modifier.height(6.dp))
         }
+    }
+}
+
+/** 平均成绩文本：数据不足或为 DNF 时显示 "-"。 */
+private fun avgText(value: Double?, milli: Boolean): String =
+    if (value == null) "-" else TimeFormat.prettyRounded(value, milli)
+
+/** 最佳 / 最差两栏切换按钮。 */
+@Composable
+private fun RankTabs(showBest: Boolean, onSelect: (Boolean) -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        RankTab("Best", selected = showBest, onClick = { onSelect(true) }, modifier = Modifier.weight(1f))
+        RankTab("Worst", selected = !showBest, onClick = { onSelect(false) }, modifier = Modifier.weight(1f))
+    }
+}
+
+@Composable
+private fun RankTab(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val shape = RoundedCornerShape(percent = 50)
+    Box(
+        modifier = modifier
+            .height(36.dp)
+            .clip(shape)
+            .background(if (selected) VirgubeColors.ButtonFill else VirgubeColors.Surface)
+            .border(1.dp, VirgubeColors.Border, shape)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = label,
+            color = if (selected) VirgubeColors.OnButton else VirgubeColors.OnSurfaceVariant,
+            fontSize = 14.sp,
+            fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
+        )
     }
 }
 
